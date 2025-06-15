@@ -3,7 +3,7 @@ from google.genai import types
 from PIL import Image
 from io import BytesIO
 
-client = genai.Client(api_key="")
+client = genai.Client(api_key="Enter your API key")
 #chat = client.chats.create(model="gemini-2.0-flash-preview-image-generation")
 def drawImageTool (_input : str) -> list[str,BytesIO] :
     o = ["",None]
