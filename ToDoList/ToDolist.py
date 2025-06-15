@@ -1,8 +1,9 @@
 
 import json
 from datetime import datetime
+import os
 
-file_name = "ToDoListData.json"
+file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ToDoListData.json")
 class Task :  
     """A class to represent a task."""
     def __str__(self):
@@ -21,14 +22,16 @@ class Task :
 
 def loadData () -> dict :
     try :
-        with open(file_name,"r") as file :
+        with open(file_path,"r") as file :
             return json.load(file)
     except FileNotFoundError :
-        with open(file_name) :
-            return {"tasks" : {}}
+            with open(file_path,"w") as file :
+                file.write('{"tasks" : {}}')
+
+            return loadData()
         
 def saveData (data) :
-    with open(file_name,"w") as file :
+    with open(file_path,"w") as file :
         json.dump(data,file,indent=4)
 
 def AddTask (description) :
@@ -53,7 +56,6 @@ def markTaskAsComplete (id : str) :
     saveData(data)
 
 def main() :
-    markTaskAsComplete(str(20250615155349499090))
     while True :    
         response = input("""
         1. view task
