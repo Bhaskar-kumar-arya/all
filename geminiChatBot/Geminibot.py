@@ -2,8 +2,12 @@ from google import genai
 from google.genai import types
 from PIL import Image
 from io import BytesIO
+from dotenv import load_dotenv
+import os
 
-client = genai.Client(api_key="Enter your API key")
+load_dotenv()
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 #chat = client.chats.create(model="gemini-2.0-flash-preview-image-generation")
 def drawImageTool (_input : str) -> list[str,BytesIO] :
     o = ["",None]
