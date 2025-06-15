@@ -29,6 +29,7 @@ def loadData () -> dict :
                 file.write('{"tasks" : {}}')
 
             return loadData()
+    
         
 def saveData (data) :
     with open(file_path,"w") as file :
@@ -54,6 +55,7 @@ def markTaskAsComplete (id : str) :
     tasks = data["tasks"]
     tasks[id]["completed"] = "True"
     saveData(data)
+    
 
 def main() :
     while True :    
