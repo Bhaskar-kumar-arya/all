@@ -44,11 +44,11 @@ def AddTask (description) :
 def updateTaskDataFromId (id: int) :
     tasks = loadData()["tasks"]
     
-
-
+          
 def viewTasks () :
-    print(loadData()["tasks"])
-        
+    tasks = loadData()["tasks"]
+    for id,values in tasks.items() :
+        print(f"id : {id} task : {values['description']} --> {'Completed' if values['completed'] == 'True' else 'Incomplete'}" )
 
 def markTaskAsComplete (id : str) :
     data = loadData()
@@ -59,18 +59,17 @@ def markTaskAsComplete (id : str) :
 
 def main() :
     while True :    
-        response = input("""
-        1. view task
-        2. create task 
-        3. mark task as complete
-""").strip()
+        print("Options:")
+        print("1. view task")
+        print("2. create task")
+        print("3. mark task as complete")
+        response = input("What do you want to do ?\n")
         if response == "1" :
             viewTasks()
         elif response == "2" :
             AddTask(input("describe the task : "))   
         elif response == "3" :
-            task = input("Enter task to mark as complete: ")
-            markTaskAsComplete(task)    
+            markTaskAsComplete(input("enter ID : "))    
         else :
             print("Invalid option, please try again.")
     
