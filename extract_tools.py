@@ -20,7 +20,14 @@ def python_type_to_json_type(type_str: str):
         return "object"
     return "string"
 
-def extract_functions_from_ast(filepath):
+def extract_tag_from_source(filepath):
+    with open(filepath, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip().startswith("# @tag:"):
+                return line.strip().split(":", 1)[1].strip()
+    return ""
+
+def extract_functions_from_ast(filepath, tag_suffix=""):
     with open(filepath, "r", encoding="utf-8") as f:
         source = f.read()
     tree = ast.parse(source, filename=filepath)
@@ -29,7 +36,10 @@ def extract_functions_from_ast(filepath):
 
     for node in tree.body:
         if isinstance(node, ast.FunctionDef):
-            name = node.name
+            base_name = node.name
+            SEPARATOR = "-"
+            name = f"{base_name}{SEPARATOR}{tag_suffix}" if tag_suffix else base_name
+
             docstring = ast.get_docstring(node) or ""
             parameters = {
                 "type": "object",
@@ -99,7 +109,13 @@ def main():
         print("❌ No file selected. Exiting.")
         return
 
-    new_tools = extract_functions_from_ast(file_path)
+    tag = extract_tag_from_source(file_path)
+    if not tag:
+        print("⚠️  No tag found in file. Functions will not have suffixes.")
+    else:
+        print(f"🔖 Tag found: {tag}")
+
+    new_tools = extract_functions_from_ast(file_path, tag)
     existing_tools = load_existing_tools(args.output)
     merged_tools, added_count = merge_tools(existing_tools, new_tools)
 

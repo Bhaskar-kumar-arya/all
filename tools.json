@@ -1,171 +1,17 @@
 [
   {
-    "name": "loadData",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    }
-  },
-  {
-    "name": "saveData",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "string",
-          "description": "data parameter"
-        }
-      },
-      "required": [
-        "data"
-      ]
-    }
-  },
-  {
-    "name": "AddTask",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string",
-          "description": "description parameter"
-        }
-      },
-      "required": [
-        "description"
-      ]
-    }
-  },
-  {
-    "name": "updateTaskDataFromId",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "description": "id parameter"
-        }
-      },
-      "required": [
-        "id"
-      ]
-    }
-  },
-  {
-    "name": "viewTasks",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    }
-  },
-  {
-    "name": "markTaskAsComplete",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "id parameter"
-        }
-      },
-      "required": [
-        "id"
-      ]
-    }
-  },
-  {
-    "name": "main",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    }
-  },
-  {
-    "name": "drawBoard",
-    "description": "",
+    "name": "drawBoard-TicTacTie",
+    "description": "draws tictactoe board on user's terminal. you are supposed to use this tool everytime it's state changes.the board is then automatically drawn in a representable manner(GUI) to the user, you dont need to draw it",
     "parameters": {
       "type": "object",
       "properties": {
         "Board": {
           "type": "string",
-          "description": "Board parameter"
+          "description": "Board in python list JSON format , values can be 'X' or 'O' or ' ' for blank example : [['O','X','O'],['O','X','O'],['O','X','X']]. "
         }
       },
       "required": [
-        "Board"
-      ]
-    }
-  },
-  {
-    "name": "move",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "row": {
-          "type": "string",
-          "description": "row parameter"
-        },
-        "column": {
-          "type": "string",
-          "description": "column parameter"
-        },
-        "isFirstPlayer": {
-          "type": "string",
-          "description": "isFirstPlayer parameter"
-        }
-      },
-      "required": [
-        "row",
-        "column",
-        "isFirstPlayer"
-      ]
-    }
-  },
-  {
-    "name": "evaluateWinner",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "Board": {
-          "type": "string",
-          "description": "Board parameter"
-        }
-      },
-      "required": [
-        "Board"
-      ]
-    }
-  },
-  {
-    "name": "CheckIfDraw",
-    "description": "",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "Board": {
-          "type": "string",
-          "description": "Board parameter"
-        },
-        "IscurrentPlayerP1": {
-          "type": "string",
-          "description": "IscurrentPlayerP1 parameter"
-        }
-      },
-      "required": [
-        "Board",
-        "IscurrentPlayerP1"
+        
       ]
     }
   }

@@ -4,6 +4,9 @@ from PIL import Image
 from io import BytesIO
 from dotenv import load_dotenv
 import os
+import json
+import ast
+from TicTacToe import drawBoard
 
 load_dotenv()
 
@@ -44,14 +47,20 @@ CreateImageFunc = {
         "required": ["prompt"],
     },
 }
-
-tools = tools = types.Tool(function_declarations=[CreateImageFunc])
+def extractFunctionDeclrations () :
+    with open("tools.json","r") as file :
+        return  json.load(file)
+    
+for declaration in extractFunctionDeclrations() :
+    print(declaration)    
+   
+tools = types.Tool(function_declarations=[CreateImageFunc] + extractFunctionDeclrations())
 config = types.GenerateContentConfig(tools=[tools])
 contents = []
 while True :
     contents.append(types.Content(parts=[types.Part(text=input("your turn : "))],role= "user"))
     response = client.models.generate_content(
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     contents= contents,
     config=config,
 )
@@ -68,12 +77,26 @@ while True :
             contents.append(response.candidates[0].content) # Append the content from the model's response.
             contents.append(types.Content(role="user", parts=[function_response_part])) # Append the function response
             final_response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            config=config,
+            contents= contents,
+            )
+            print(final_response.text)
+        elif function_call.name == "drawBoard-TicTacTie" :
+            board = ast.literal_eval(function_call.args["Board"])
+            drawBoard(board)
+            function_response_part = types.Part.from_function_response(
+            name=function_call.name,
+            response={"result": "board drawn"},
+            )
+            contents.append(response.candidates[0].content) # Append the content from the model's response.
+            contents.append(types.Content(role="user", parts=[function_response_part])) # Append the function response
+            final_response = client.models.generate_content(
             model="gemini-2.0-flash",
             config=config,
             contents= contents,
             )
             print(final_response.text)
-
     else:
         print("No function call found in the response.")
         print(response.text)
