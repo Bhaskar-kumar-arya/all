@@ -7,6 +7,9 @@ import os
 import json
 import ast
 from TicTacToe import drawBoard
+from ToDolist import AddTask
+from ToDolist import viewTasks
+from ToDolist import markTaskAsComplete
 
 load_dotenv()
 
@@ -88,6 +91,17 @@ while True :
             board = ast.literal_eval(function_call.args["Board"])
             drawBoard(board)
             toolResultStr = {"result": "board drawn"}
+            sendToolResponse(toolResultStr,function_call.name)
+        elif function_call.name == "AddTask-ToDoList" :
+            AddTask(function_call.args["description"])
+            toolResultStr = {"result": "task added"}
+            sendToolResponse(toolResultStr,function_call.name)
+        elif function_call.name == "viewTasks-ToDoList" :
+            toolResultStr = {"result": viewTasks()}
+            sendToolResponse(toolResultStr,function_call.name)
+        elif function_call.name == "markTaskAsComplete-ToDoList" :
+            markTaskAsComplete(function_call.args["id"])
+            toolResultStr = {"result": "task marked as complete"}
             sendToolResponse(toolResultStr,function_call.name)
     else:
         print(response.text)

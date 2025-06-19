@@ -10,8 +10,47 @@
           "description": "Board in python list JSON format , values can be 'X' or 'O' or ' ' for blank example : [['O','X','O'],['O','X','O'],['O','X','X']]. "
         }
       },
+      "required": []
+    }
+  },
+  {
+    "name": "AddTask-ToDoList",
+    "description": "add a task in the list",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "description of the task"
+        }
+      },
       "required": [
-        
+        "description"
+      ]
+    }
+  },
+  {
+    "name": "viewTasks-ToDoList",
+    "description": "view all the tasks (ids,descriptions,and completion status)",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "markTaskAsComplete-ToDoList",
+    "description": "marks a task as complete",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "id of the task"
+        }
+      },
+      "required": [
+        "id"
       ]
     }
   }
