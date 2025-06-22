@@ -6,10 +6,12 @@ from dotenv import load_dotenv
 import os
 import json
 import ast
-from TicTacToe import drawBoard
-from ToDolist import AddTask
-from ToDolist import viewTasks
-from ToDolist import markTaskAsComplete
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from TicTacToe.TicTacToe import drawBoard
+from ToDoList.ToDolist import AddTask, viewTasks, markTaskAsComplete
 
 load_dotenv()
 

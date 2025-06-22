@@ -74,5 +74,5 @@ def main() :
             print("Invalid option, please try again.")
     
 
-
-main()
+if __name__ == "__main__":
+    main()
