@@ -96,15 +96,15 @@ def CheckIfDraw (Board : list[list[str]],IscurrentPlayerP1) :
                     
 
 
+if __name__ == "__main__":
 
-
-IscurrentPlayerP1 = True
-play : bool = True
-while play :
-    drawBoard(Board)
-    print(f"{'p1 (0)' if IscurrentPlayerP1 else 'p2 (1)'}'s Move :")
-    move(int(input("row :")),int(input("column : ")), IscurrentPlayerP1)
-    if evaluateWinner(Board) :
-        print(f"{'p1' if IscurrentPlayerP1 else 'p2'} Won") 
-        play = False
-    IscurrentPlayerP1 = not IscurrentPlayerP1
+    IscurrentPlayerP1 = True
+    play : bool = True
+    while play :
+        drawBoard(Board)
+        print(f"{'p1 (0)' if IscurrentPlayerP1 else 'p2 (1)'}'s Move :")
+        move(int(input("row :")),int(input("column : ")), IscurrentPlayerP1)
+        if evaluateWinner(Board) :
+            print(f"{'p1' if IscurrentPlayerP1 else 'p2'} Won") 
+            play = False
+        IscurrentPlayerP1 = not IscurrentPlayerP1
