@@ -12,6 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from TicTacToe.TicTacToe import drawBoard
 from ToDoList.ToDolist import AddTask, viewTasks, markTaskAsComplete
+from weatherApp.main import GetWeather
 
 load_dotenv()
 
@@ -72,7 +73,7 @@ def sendToolResponse(toolResultStr,funcName) :
     config=config,
     contents= contents,
     )
-    print(final_response.text)    
+    print("AI response : " + final_response.text)    
    
 while True :
     contents.append(types.Content(parts=[types.Part(text=input("your turn : "))],role= "user"))
@@ -105,5 +106,8 @@ while True :
             markTaskAsComplete(function_call.args["id"])
             toolResultStr = {"result": "task marked as complete"}
             sendToolResponse(toolResultStr,function_call.name)
+        elif function_call.name == "GetWeather" :
+            toolResultStr = GetWeather(function_call.args["cityName"])
+            sendToolResponse(toolResultStr,function_call.name)
     else:
-        print(response.text)
+        print( "AI response : " + response.text)

@@ -53,5 +53,21 @@
         "id"
       ]
     }
+  },
+  {
+    "name": "GetWeather",
+    "description": "get weather details of a city",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "cityName": {
+          "type": "string",
+          "description": "cityName"
+        }
+      },
+      "required": [
+        "cityName"
+      ]
+    }
   }
 ]

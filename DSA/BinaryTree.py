@@ -167,3 +167,172 @@ def isSymmetric_FromArray (tree : list[Node]) :
     return True           
            
 
+def isSymmetric_stack (root : Node) :
+    lStack = [root.left]
+    rStack = [root.right]
+    while lStack and rStack : 
+        leftNode = lStack.pop()
+        rightNode = rStack.pop()
+        if leftNode is None and rightNode is None : continue
+        if leftNode is None or rightNode is None : return False
+        if leftNode.val != rightNode.val : return False
+        lStack.append(leftNode.left)
+        lStack.append(leftNode.right)
+        rStack.append(rightNode.right)
+        rStack.append(rightNode.left)
+    return True
+
+# combined with max depth calculation .. while calculating the depth , we simultaneously check if it is balanced
+def isBalanced_recursion (root : Node) :
+    if not root : return (0)
+    leftDepth = isBalanced_recursion(root.left)
+    rightDepth= isBalanced_recursion(root.right)
+    return (1 + max(leftDepth,rightDepth) if abs(leftDepth - rightDepth) <= 1 and leftDepth != -1 and rightDepth != -1 else -1)          
+
+# output for Root Node : [[1], [2, 3], [4, 5, 6], [7]]
+def levelOrder_stack (root) : 
+    if not root : return []
+    result = []
+    q = deque()
+    q.append(root)
+    while q :
+        temp = []
+        for i in range(len(q)) :
+            node = q.popleft()
+            temp.append(node.val)
+            if node.left : q.append(node.left)
+            if node.right : q.append(node.right)    
+        result.append(temp)    
+    return result        
+
+def invertTree(root : Node) -> Node : 
+    if not root : return None
+    root.left , root.right = root.right,root.left
+    invertTree(root.left)
+    invertTree(root.right)
+    return root
+
+def printTree (root : Node) :
+    levels = levelOrder_stack(root)
+    for level in levels :
+        print(level) 
+
+def hasPathSum_postOrder(root: Node, targetSum: int) -> bool:
+    stack = []
+    curr = root
+    prev : Node = None
+    sum = 0
+    while stack or curr :
+       
+        while curr :
+            stack.append(curr)
+            sum += curr.val
+            curr = curr.left
+        node = stack[-1]
+        if not node.right or prev == node.right :
+            if not node.right and not node.right :
+                if sum == targetSum : return True
+            stack.pop()
+            prev = node
+            sum -= node.val 
+            curr = None   
+        else : 
+            curr = node.right
+    return False        
+
+def hasPathSum_preOrder(root: Node, targetSum: int) -> bool:   
+    stack = [(root,root.val)]
+    while stack :
+        node,curr_sum = stack.pop()
+        if not node.left and not node.right and curr_sum == targetSum : return True
+        if node.right : stack.append((node.right,curr_sum + node.right.val))
+        if node.left : stack.append((node.left,curr_sum + node.left.val))
+    return False
+
+def hasPathSum_Recursion (root : Node,targetSum : int) :
+    if not root : return False
+    if targetSum == root.val and not root.left and not root.right : return True
+    targetSum -= root.val
+    if hasPathSum_Recursion(root.left,targetSum) or hasPathSum_Recursion(root.right,targetSum) : return True
+    return False
+
+def search (root : Node , node) :
+    if not root : return False
+    if search(root.left,node) or search(root.right,node) : return True
+    if root == node : return True
+    return False
+
+def lowestCommonAncestor_DFS(root: Node, p: Node, q: Node) -> Node :
+    stack = []
+    curr = root
+    prev = None
+    while stack or curr :
+        while curr :
+            stack.append((curr,[curr == p,curr == q]))
+            # print(f"curr : {curr} , p : {p} , q : {q} , stack[-1][1][0] : {stack[-1][1][0]} , stack[-1][1][1] : {stack[-1][1][1]}")
+            curr = curr.left
+        node,isAscendant = stack[-1]
+        if not node.right or prev == node.right :
+            stack.pop()
+            if isAscendant == [True,True] : return node
+            prev = node
+            if isAscendant[0] : stack[-1][1][0] = True
+            if isAscendant[1] : stack[-1][1][1] = True    
+        else : 
+            curr = node.right
+    return None    
+
+def lowestCommonAncestor_ParentMap (root: Node, p: Node, q: Node) -> Node :
+    parent = {root : None}
+    stack = [root]
+    while p not in parent or q not in parent : 
+        node =stack.pop()
+        if node.left : 
+            stack.append(node.left)
+            parent[node.left] = node
+        if node.right : 
+            stack.append(node.right)
+            parent[node.right] = node
+    Ancestors = set()
+    while p : 
+        Ancestors.add(p)
+        p = parent[p]
+    while q not in Ancestors :
+        q = parent[q]
+    return q        
+
+def lowestCommonAncestor_recursion (root: Node, p: Node, q: Node) :
+    if not root : return None 
+    if root == p or root == q :
+        return root
+    left = lowestCommonAncestor_recursion(root.left,p,q) 
+    right = lowestCommonAncestor_recursion(root.right,p,q) 
+    if left and right : return root
+    return left if left else right
+
+root = Node(3)
+
+root.left = Node(5)
+root.right = Node(1)
+
+root.left.left = Node(6)
+root.left.right = Node(2)
+
+root.right.left = Node(0)
+root.right.right = Node(8)
+
+root.left.right.left = Node(7)
+root.left.right.right = Node(4)
+
+# to do : use hasmap for inorder ...
+def buildTree(preorder: list[int], inorder: list[int]) -> Node:
+    def recurse () : 
+        if not inorder : return 
+        root = Node(preorder[0]) 
+        root.left = buildTree(preorder[1:],inorder[:inorder.index(root.val)]) 
+        root.right = buildTree(preorder[inorder.index(root.val) + 1 :],inorder[inorder.index(root.val) + 1 :])
+        return root
+    return recurse()
+
+printTree(buildTree([3,9,20,15,7],[9,3,15,20,7]))    
+

@@ -46,9 +46,13 @@ def updateTaskDataFromId (id: int) :
     
           
 def viewTasks () :
+    print(f"toDoList : showing tasks")
     tasks = loadData()["tasks"]
+    print(f"toDoList : tasks : {tasks}")
+    result = ""
     for id,values in tasks.items() :
-        print(f"id : {id} task : {values['description']} --> {'Completed' if values['completed'] == 'True' else 'Incomplete'}" )
+        result += (f"id : {id} task : {values['description']} --> {'Completed' if values['completed'] == 'True' else 'Incomplete'}" )
+    return result    
 
 def markTaskAsComplete (id : str) :
     data = loadData()
@@ -57,22 +61,22 @@ def markTaskAsComplete (id : str) :
     saveData(data)
     
 
-def main() :
-    while True :    
-        print("Options:")
-        print("1. view task")
-        print("2. create task")
-        print("3. mark task as complete")
-        response = input("What do you want to do ?\n")
-        if response == "1" :
-            viewTasks()
-        elif response == "2" :
-            AddTask(input("describe the task : "))   
-        elif response == "3" :
-            markTaskAsComplete(input("enter ID : "))    
-        else :
-            print("Invalid option, please try again.")
+# def main() :
+#     while True :    
+#         print("Options:")
+#         print("1. view task")
+#         print("2. create task")
+#         print("3. mark task as complete")
+#         response = input("What do you want to do ?\n")
+#         if response == "1" :
+#             viewTasks()
+#         elif response == "2" :
+#             AddTask(input("describe the task : "))   
+#         elif response == "3" :
+#             markTaskAsComplete(input("enter ID : "))    
+#         else :
+#             print("Invalid option, please try again.")
     
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
