@@ -110,4 +110,4 @@ while True :
             toolResultStr = GetWeather(function_call.args["cityName"])
             sendToolResponse(toolResultStr,function_call.name)
     else:
-        print( "AI response : " + response.text)
+        print( "AI response : " + response.text if response.text else "No response from AI")
