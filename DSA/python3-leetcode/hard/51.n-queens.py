@@ -10,44 +10,29 @@ class Solution:
     def solveNQueens(self, n: int) -> list[list[str]]:
         res = []
         path = [None]*n
-
-        def valid(row,col) :
-            def checkDiags() :
-                i,j = row - min(row,col) , col - min(row,col)
-                while max(i,j) < n :
-                    print(row,col,i,j)
-                    if i != row and j != col :
-                        if path[i] == j :
-                            return False
-                    i += 1 
-                    j += 1  
-                i,j = row + min(n - row - 1 , col)  , col - min(n - row - 1 , col)
-                while max(i,j) < n :
-                    print(row,col,i,j)
-                    if i != row and j != col :
-                        if path[i] == j :
-                            return False
-                    i -= 1 
-                    j += 1 
-                print(f"foubd valid diag set : {path}")    
-                return True    
-            return path.count(col) < 2  and checkDiags()
-
+        occupiedCols = set()
+        positivediags = set()
+        negativediags = set() 
+        state= [["."] * n for _ in range(n)] # start with empty board
         def backtrack (row) :
-            print(f"row : {row}")
+            # print(f"row : {row}")
             if row == n :
-                sol = []
-                for col in path :
-                    sol.append("."*col + "Q" + "."*(n - col - 1))
-                res.append(sol)    
-
+                res.append(["".join(row) for row in state])    
                 return
             for col in range(n) :
                 path[row] = col
-                if valid(row,col) :
+                if col not in occupiedCols and (row + col) not in positivediags and (row - col) not in negativediags :
+                    occupiedCols.add(col)
+                    positivediags.add(row + col)
+                    negativediags.add(row - col)
+                    state[row][col]='Q'
                     backtrack(row + 1)
-                else :
-                    print(f"invalid path : {path}")    
+                    positivediags.remove(row + col)
+                    negativediags.remove(row - col)
+                    occupiedCols.remove(col)
+                    state[row][col]='.'
+                # else :
+                #     print(f"invalid path : {path}")    
                 path[row] = None    
  
         backtrack(0)

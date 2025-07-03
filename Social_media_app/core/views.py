@@ -11,7 +11,12 @@ from .models import *
 def index(request):
     user_object = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user_object)
-    posts = Post.objects.all().order_by('-created_at')
+    user_following = FollowersCount.objects.filter(follower = request.user.username)
+    posts = []
+    for follow in user_following:
+        user_posts = Post.objects.filter(user=follow.user).order_by('-created_at')
+        for post in user_posts:
+            posts.append(post)
     return render(request, 'index.html',{'user_profile' : user_profile,'posts' : posts})
 
 @login_required(login_url='signin')
@@ -128,12 +133,16 @@ def profile(request,pk) :
     is_following = False
     if FollowersCount.objects.filter(follower=request.user.username, user=pk).first():
         is_following = True
+    user_followersCount = len(FollowersCount.objects.filter(user=pk))   
+    user_followingCount = len(FollowersCount.objects.filter(follower=pk))    
     context = {
         'user_object' : user_object,
         'user_profile' : user_profile,
         'user_posts' : user_posts,
         'user_no_of_posts' : user_no_of_posts,
         'is_following' : is_following,
+        'user_followersCount' : user_followersCount,
+        'user_followingCount' : user_followingCount,
     }
     return render(request,'profile.html',context)    
 
