@@ -10,57 +10,67 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        copy = []
+        rows : list[set] = [set() for i in range(9)]
+        cols : list[set] = [set() for i in range(9)]
+        Boxes : list[list[set]] = [[set() for i in range(3)] for i in range(3)]
+        availableCandidates = []
+        filled = 0
+        for i in range(9) :
+            for j in range(9) :
+                if board[i][j] != "." :
+                    filled += 1
+                    rows[i].add(board[i][j])
+                    cols[j].add(board[i][j])
+                    Boxes[(i//3)][(j//3)].add(board[i][j])  
+                else :
+                    availableCandidates.append((i,j))        
         def is_valid (row,col) :
-            # check row and col :
-            curr_row = set()
-            curr_col = set()
-            for i in range(9) :
-                if board[row][i] in curr_row or board[i][col] in curr_col :
-                    return False
-                if board[row][i] != "." :
-                    curr_row.add(board[row][i])
-                if board[i][col] != "." :
-                    curr_col.add(board[i][col])  
-            start_box_row = (row // 3)*3 
-            start_box_col = (col // 3)*3
-            curr_box = set()
-            for i in range(3) :
-                for j in range(3) :
-                    if board[start_box_row + i][start_box_col + j] in curr_box : 
-                        return False
-                    if board[start_box_row + i][start_box_col + j] != "." :
-                        curr_box.add(str(board[start_box_row + i][start_box_col + j]))
-            return True        
-        def calculatefilled () :
-            filled = 0
-            for i in range(9) :
-                for j in range(9) :
-                    if board[i][j] != "." :
-                        filled += 1
-            return filled            
+            if board[row][col] in rows[row] or board[row][col] in cols[col] : return False
+            if board[row][col] in Boxes[row//3][col//3] : return False
+            return True                 
         
         def backtrack(filled) :
             if filled == 81 : return True
-            for i in range(9) : 
-                for j in range(9) :
-                    if board[i][j] == "." :
-                        # print(f"\n filled : {filled} row,col : {i},{j} value : {board[i][j]} board :")
-                        # for row in board :
-                        #     print(row)    
+            while availableCandidates :
+                    i,j = availableCandidates[-1]
+                    if board[i][j] == "." :   
                         for num in range(1,10) :
                             board[i][j] = str(num)
                             if is_valid(i,j) :
-                                # print(f"found valid filled : {filled} added {num}")
+                                rows[i].add(board[i][j])
+                                cols[j].add(board[i][j])
+                                Boxes[(i//3)][j//3].add(board[i][j])
+                                availableCandidates.pop()
                                 if backtrack(filled + 1) :
                                     return True
-                            # else :
-                            #     print(f"found invalid board upon adding {num}")    
-                            board[i][j] = "."      
+                                rows[i].remove(board[i][j])
+                                cols[j].remove(board[i][j])
+                                Boxes[(i//3)][j//3].remove(board[i][j])    
+                                availableCandidates.append((i,j)) 
+                            board[i][j] = "."  
             return False
-        backtrack(calculatefilled())
-        return board                
+        backtrack(filled)
+        return board
 
 # @lc code=end
-print(Solution().solveSudoku([["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]))
+easyBoard = [["5", "3", ".", "6", "7", "8", "9", "1", "2"],
+    ["6", ".", "2", "1", "9", "5", "3", "4", "8"],
+    ["1", "9", "8", "3", "4", "2", "5", "6", "."],
+    ["8", "5", "9", "7", "6", "1", ".", "2", "3"],
+    ["4", "2", "6", "8", ".", "3", "7", "9", "1"],
+    ["7", ".", "3", "9", "2", "4", "8", "5", "6"],
+    ["9", "6", ".", "5", "3", "7", "2", "8", "4"],
+    ["2", "8", "7", ".", "1", "9", "6", ".", "5"],
+    [".", "4", "5", "2", "8", "6", "1", "7", "9"]]
+
+difficultBoard = [["5","3",".",".","7",".",".",".","."],
+                ["6",".",".","1","9","5",".",".","."],
+                [".","9","8",".",".",".",".","6","."],
+                ["8",".",".",".","6",".",".",".","3"],
+                ["4",".",".","8",".","3",".",".","1"],
+                ["7",".",".",".","2",".",".",".","6"],
+                [".","6",".",".",".",".","2","8","."],
+                [".",".",".","4","1","9",".",".","5"],
+                [".",".",".",".","8",".",".","7","9"]]
+print(Solution().solveSudoku(easyBoard))
 

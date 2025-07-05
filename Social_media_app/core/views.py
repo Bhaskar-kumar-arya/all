@@ -11,7 +11,7 @@ from .models import *
 def index(request):
     user_object = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user_object)
-    user_following = FollowersCount.objects.filter(follower = request.user.username)
+    user_following = FollowersCount.objects.filter(follower = request.user)
     posts = []
     for follow in user_following:
         user_posts = Post.objects.filter(user=follow.user).order_by('-created_at')
@@ -23,14 +23,16 @@ def index(request):
 def follow(request):
     if request.method == 'POST' :
         follower = request.POST.get('follower') 
-        user = request.POST.get('user')
-        if followercount := FollowersCount.objects.filter(follower=follower,user=user).first():
+        username = request.POST.get('user')
+        user_obj = User.objects.get(username=username)
+        follower_obj = User.objects.get(username=follower)
+        if followercount := FollowersCount.objects.filter(follower=follower_obj,user=user_obj).first():
             followercount.delete()
-            return redirect('/profile/' + user)
+            return redirect('/profile/' + username)
         else :
-            new_follower = FollowersCount.objects.create(follower=follower,user=user)   
+            new_follower = FollowersCount.objects.create(follower=follower_obj,user=user_obj)   
             new_follower.save()
-            return redirect('/profile/' + user)
+            return redirect('/profile/' + username)
     else :
         return redirect('/')
 
@@ -52,7 +54,7 @@ def settings (request) :
 @login_required(login_url='signin')
 def upload(request): 
     if request.method == "POST" : 
-        user = request.user.username
+        user = request.user
         image = request.FILES.get('image_upload')
         caption = request.POST.get('caption')
         if not image or not caption:
@@ -86,7 +88,7 @@ def signup(request):
         auth.login(request,user_login)
         # create a profile for the user
         user_model = User.objects.get(username=username)
-        new_profile = Profile.objects.create(user = user_model,id_user = user_model.id)
+        new_profile = Profile.objects.create(user = user_model)
         new_profile.save()
         return redirect('settings')
     else :
@@ -108,12 +110,12 @@ def signin (request) :
 
 @login_required(login_url='signin')
 def like_post(request):
-    username = request.user.username
+    user = request.user
     post_id = request.GET.get('post_id')
     post = Post.objects.get(id=post_id)
-    like_filter = LikePost.objects.filter(post_id=post_id,username=username).first()
+    like_filter = LikePost.objects.filter(user=user).first()
     if not like_filter:
-        new_like = LikePost.objects.create(post_id=post_id,username=username)
+        new_like = LikePost.objects.create(user=user, post=post)
         post.no_of_likes += 1
         post.save()
         new_like.save()
@@ -128,13 +130,13 @@ def like_post(request):
 def profile(request,pk) :
     user_object = User.objects.get(username=pk)
     user_profile = Profile.objects.get(user=user_object)
-    user_posts = Post.objects.filter(user = pk)
+    user_posts = Post.objects.filter(user = user_object)
     user_no_of_posts = len(user_posts)
     is_following = False
-    if FollowersCount.objects.filter(follower=request.user.username, user=pk).first():
+    if FollowersCount.objects.filter(follower=request.user, user=user_object).first():
         is_following = True
-    user_followersCount = len(FollowersCount.objects.filter(user=pk))   
-    user_followingCount = len(FollowersCount.objects.filter(follower=pk))    
+    user_followersCount = len(FollowersCount.objects.filter(user=user_object))   
+    user_followingCount = len(FollowersCount.objects.filter(follower=user_object))    
     context = {
         'user_object' : user_object,
         'user_profile' : user_profile,
