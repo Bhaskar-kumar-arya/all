@@ -18,6 +18,8 @@ class Video (models.Model) :
     thumbnail = models.ImageField(upload_to='thumbnails/',default='newVideo.jpeg')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     views = models.PositiveIntegerField(default=0)
+    likes = models.ManyToManyField(User,related_name='liked_videos',blank=True)
+    dislikes = models.ManyToManyField(User,related_name='disliked_videos',blank=True)
 
     def  __str__(self):
         return f"Video : Title = {self.title} of self.channel.user.username" 

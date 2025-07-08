@@ -48,11 +48,13 @@
             <div class="video-grid">
                 {% for video in videos %}
                 <div class="video-card">
+                    <a href="{% url 'watch_video' video_id=video.pk %}">
                     <img src="{{video.thumbnail.url}}" class="thumbnail">
                     <div class="video-info">
                         <h4>{{video.title}}</h4>
+                    </a>
                         <p>{{video.channel.name}}</p>
-                        <p>1M views &bull; 1 day ago</p>
+                        <p>{{video.views}} views &bull; {{video.uploaded_at|date:"M d, Y"}}</p>
                     </div>
                 </div>
                 {% endfor %}
