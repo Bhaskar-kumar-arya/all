@@ -141,8 +141,40 @@
                     </div>
                 </div>
                 <div class="video-description">
-                    <p>{{ video.views }} views &bull; {{ video.uploaded_at|date:"M d, Y" }}</p>
+                    <p>{{ video.views.all.count}} views &bull; {{ video.uploaded_at|date:"M d, Y" }}</p>
                     <pre>{{ video.description }}</pre>
+                </div>
+            </div>
+            <!-- Comment Section -->
+            <div class="comment-section">
+                <h3>Comments (<span id="comment-count">0</span>)</h3>
+                <div class="comment-form">
+                    <!-- <img src="{% static 'images/user.png' %}" alt="User Avatar" class="comment-avatar"> -->
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button type="submit" class="comment-submit-btn">Comment</button>
+                    </form>
+                    </div>
+                <div class="comments-list">
+                    <!-- Example Comment (will be dynamically loaded/added) -->
+                    {% for comment in comments %} 
+                        <div class="comment-item">
+                        <img src="{{comment.channel.profile_picture.url}}" alt="User Avatar" class="comment-avatar">
+                        <div class="comment-content">
+                            <p class="comment-author">{{comment.channel.name}} <span class="comment-time">2 hours ago</span></p>
+                            <p class="comment-text">{{comment.text}}</p>
+                            <div class="comment-actions">
+                                <button><i class="fas fa-thumbs-up"></i></button>
+                                <span>0</span>
+                                <button><i class="fas fa-thumbs-down"></i></button>
+                                <span>0</span>
+                                <button>Reply</button>
+                            </div>
+                        </div>
+                        </div>
+                    {% endfor %}
+                    <!-- More comments would go here -->
                 </div>
             </div>
         </div>
@@ -156,7 +188,7 @@
                             <h4>{{ related_video.title }}</h4>
                     </a>
                     <a href="#"><p>{{ related_video.channel.name }}</p></a>
-                    <p>{{ related_video.views }} views</p>
+                    <p>{{ related_video.views.all.count }} views</p>
                         </div>
             </div>
             {% endfor %}
@@ -171,6 +203,124 @@
         .video-meta .actions button.active {
             background-color: #c6c6c6; /* A darker shade to indicate active state */
             color: #333;
+        }
+        /* Comment Section Styles */
+        .comment-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .comment-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .comment-form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .comment-form .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .comment-form .comment-input {
+            flex-grow: 1;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .comment-form .comment-input:focus {
+            border-color: #065fd4; /* YouTube blue */
+        }
+
+        .comment-form .comment-submit-btn {
+            background-color: #065fd4; /* YouTube blue */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .comment-form .comment-submit-btn:hover {
+            background-color: #034ea2;
+        }
+
+        .comments-list {
+            margin-top: 20px;
+        }
+
+        .comment-item {
+            display: flex;
+            margin-bottom: 25px;
+        }
+
+        .comment-item .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .comment-item .comment-content {
+            flex-grow: 1;
+        }
+
+        .comment-item .comment-author {
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .comment-item .comment-author .comment-time {
+            font-weight: normal;
+            color: #777;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .comment-item .comment-text {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .comment-item .comment-actions button {
+            background: none;
+            border: none;
+            color: #777;
+            font-size: 13px;
+            cursor: pointer;
+            margin-right: 15px;
+            padding: 0;
+        }
+
+        .comment-item .comment-actions button i {
+            margin-right: 5px;
+        }
+
+        .comment-item .comment-actions span {
+            font-size: 13px;
+            color: #777;
+            margin-right: 15px;
         }
     </style>
 </body>

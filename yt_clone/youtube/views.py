@@ -57,12 +57,33 @@ def login(request) :
         
         form = AuthenticationForm()
     return render(request,'login.html',{'form' : form})     
-
+@login_required(login_url='login.html')
 def watch_video (request,video_id) :
     video = get_object_or_404(Video,pk=video_id)
-    related_videos = Video.objects.exclude(pk=video_id)[:10]
-    return render(request,'watch.html',{'video' : video,'related_videos' :related_videos})
+    user = request.user
+    if request.method == 'POST' :
+        form = CommentForm(request.POST) 
+        if form.is_valid() :
+            comment = form.save(commit=False)
+            comment.video = video
+            comment.channel = Channel.objects.get(user=user) 
+            comment.save()
+            return redirect('watch_video',video_id=video.pk)
+    else :
+        form = CommentForm()
+        comments = video.comments.all() 
+        if user not in video.views.all() :
+            video.views.add(user)
+        related_videos = Video.objects.exclude(pk=video_id)[:10]
+        context = {
+        'video': video,
+        'related_videos': related_videos,
+        'form': form, # Pass the form to the template
+        'comments': comments, # Pass comments to the template
+    }    
+        return render(request,'watch.html',context)
 
+@login_required(login_url='login.html')
 def like_video (request,video_id) :
     video = get_object_or_404(Video,pk=video_id)
     user = request.user 
@@ -96,4 +117,25 @@ def like_video (request,video_id) :
         'liked': liked,
         'disliked': disliked,
     })       
-                       
+
+
+@login_required(login_url='login.html')
+def dislike_comment(request):
+    comment_id = request.POST.get('comment_id')
+    comment = get_object_or_404(Comment, pk=comment_id)
+    user = request.user
+
+    if user in comment.dislikes.all():
+        comment.dislikes.remove(user)
+        disliked = False
+    else:
+        comment.dislikes.add(user)
+        disliked = True
+        if user in comment.likes.all():
+            comment.likes.remove(user)
+            
+    return JsonResponse({
+        'disliked': disliked,
+        'likes_count': comment.likes.count(),
+        'dislikes_count': comment.dislikes.count()
+    })

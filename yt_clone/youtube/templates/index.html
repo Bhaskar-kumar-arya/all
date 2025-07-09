@@ -54,7 +54,7 @@
                         <h4>{{video.title}}</h4>
                     </a>
                         <p>{{video.channel.name}}</p>
-                        <p>{{video.views}} views &bull; {{video.uploaded_at|date:"M d, Y"}}</p>
+                        <p>{{video.views.all.count}} views &bull; {{video.uploaded_at|date:"M d, Y"}}</p>
                     </div>
                 </div>
                 {% endfor %}
