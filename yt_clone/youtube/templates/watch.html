@@ -127,15 +127,21 @@
                     <div class="channel-info">
                         <img src="{{video.channel.profile_picture.url}}" alt="Channel Icon"> {# Placeholder for channel icon #}
                         <p>{{ video.channel.name }}</p>
+                        <span id="subscribers-count" style="margin-left: 10px; font-size: 14px; color: #777;">{{ video.channel.subscribers.count }} subscribers</span>
                     </div>
                     <div class="actions">
+                        {% if request.user.is_authenticated and request.user.channel != video.channel %}
+                            <button id="subscribe-button" data-channel-id="{{ video.channel.pk }}" class="{% if is_subscribed %}subscribed{% endif %}">
+                                {% if is_subscribed %}Subscribed{% else %}Subscribe{% endif %}
+                            </button>
+                        {% endif %}
                         <button id="like-button" data-video-id="{{ video.pk }}" class="{% if request.user in video.likes.all %}active{% endif %}">
                             <i class="fas fa-thumbs-up"></i> <span id="likes-count">{{ video.likes.count }}</span>
                         </button>
                         <button id="dislike-button" data-video-id="{{ video.pk }}" class="{% if request.user in video.dislikes.all %}active{% endif %}">
                             <i class="fas fa-thumbs-down"></i> <span id="dislikes-count">{{ video.dislikes.count }}</span>
                         </button>
-                        <button><i class="fas fa-share"></i> Share</button> 
+                        <button><i class="fas fa-share"></i> Share</button>
                         <button><i class="fas fa-download"></i> Download</button>
                         <button><i class="fas fa-ellipsis-h"></i></button>
                     </div>
@@ -165,10 +171,10 @@
                             <p class="comment-author">{{comment.channel.name}} <span class="comment-time">2 hours ago</span></p>
                             <p class="comment-text">{{comment.text}}</p>
                             <div class="comment-actions">
-                                <button><i class="fas fa-thumbs-up"></i></button>
-                                <span>0</span>
-                                <button><i class="fas fa-thumbs-down"></i></button>
-                                <span>0</span>
+                                <button class="comment-like-button {% if request.user in comment.likes.all %}active{% endif %}" data-comment-id="{{ comment.pk }}"><i class="fas fa-thumbs-up"></i></button>
+                                <span id="comment-likes-count-{{ comment.pk }}">{{ comment.likes.count }}</span>
+                                <button class="comment-dislike-button {% if request.user in comment.dislikes.all %}active{% endif %}" data-comment-id="{{ comment.pk }}"><i class="fas fa-thumbs-down"></i></button>
+                                <span id="comment-dislikes-count-{{ comment.pk }}">{{ comment.dislikes.count }}</span>
                                 <button>Reply</button>
                             </div>
                         </div>
@@ -197,11 +203,231 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/like_system.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            // Video like/dislike system (existing)
+            $('#like-button, #dislike-button').click(function() {
+                var videoId = $(this).data('video-id');
+                var action = $(this).attr('id') === 'like-button' ? 'like' : 'dislike';
+                var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
 
+                $.ajax({
+                    url: '/video/' + videoId + '/like/', // Ensure this URL is correct
+                    type: 'POST',
+                    data: {
+                        'action': action,
+                        'csrfmiddlewaretoken': csrfToken
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            $('#likes-count').text(response.likes_count);
+                            $('#dislikes-count').text(response.dislikes_count);
+
+                            if (response.liked) {
+                                $('#like-button').addClass('active');
+                                $('#dislike-button').removeClass('active');
+                            } else if (response.disliked) {
+                                $('#dislike-button').addClass('active');
+                                $('#like-button').removeClass('active');
+                            } else {
+                                $('#like-button').removeClass('active');
+                                $('#dislike-button').removeClass('active');
+                            }
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error: " + status + error);
+                        alert("An error occurred. Please try again.");
+                    }
+                });
+            });
+
+            // Comment like/dislike system (new)
+            $('.comment-actions').on('click', '.comment-like-button, .comment-dislike-button', function() {
+                var commentId = $(this).data('comment-id');
+                var action = $(this).hasClass('comment-like-button') ? 'like' : 'dislike';
+                var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+                var $thisButton = $(this);
+
+                $.ajax({
+                    url: '/comment/' + commentId + '/' + action + '/', // New URL for comment likes/dislikes
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': csrfToken
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            $('#comment-likes-count-' + commentId).text(response.likes_count);
+                            $('#comment-dislikes-count-' + commentId).text(response.dislikes_count);
+
+                            if (action === 'like') {
+                                if (response.liked) {
+                                    $thisButton.addClass('active');
+                                    $thisButton.nextAll('.comment-dislike-button').removeClass('active');
+                                } else {
+                                    $thisButton.removeClass('active');
+                                }
+                            } else { // action === 'dislike'
+                                if (response.disliked) {
+                                    $thisButton.addClass('active');
+                                    $thisButton.prevAll('.comment-like-button').removeClass('active');
+                                } else {
+                                    $thisButton.removeClass('active');
+                                }
+                            }
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error: " + status + error);
+                        alert("An error occurred. Please try again.");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Video like/dislike system (existing)
+            $('#like-button, #dislike-button').click(function() {
+                var videoId = $(this).data('video-id');
+                var action = $(this).attr('id') === 'like-button' ? 'like' : 'dislike';
+                var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+ 
+                $.ajax({
+                    url: '/video/' + videoId + '/like/', // Ensure this URL is correct
+                    type: 'POST',
+                    data: {
+                        'action': action,
+                        'csrfmiddlewaretoken': csrfToken
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            $('#likes-count').text(response.likes_count);
+                            $('#dislikes-count').text(response.dislikes_count);
+ 
+                            if (response.liked) {
+                                $('#like-button').addClass('active');
+                                $('#dislike-button').removeClass('active');
+                            } else if (response.disliked) {
+                                $('#dislike-button').addClass('active');
+                                $('#like-button').removeClass('active');
+                            } else {
+                                $('#like-button').removeClass('active');
+                                $('#dislike-button').removeClass('active');
+                            }
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error: " + status + error);
+                        alert("An error occurred. Please try again.");
+                    }
+                });
+            });
+ 
+            // Comment like/dislike system (new)
+            $('.comment-actions').on('click', '.comment-like-button, .comment-dislike-button', function() {
+                var commentId = $(this).data('comment-id');
+                var action = $(this).hasClass('comment-like-button') ? 'like' : 'dislike';
+                var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+                var $thisButton = $(this);
+ 
+                $.ajax({
+                    url: '/comment/' + commentId + '/' + action + '/', // New URL for comment likes/dislikes
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': csrfToken
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            $('#comment-likes-count-' + commentId).text(response.likes_count);
+                            $('#comment-dislikes-count-' + commentId).text(response.dislikes_count);
+ 
+                            if (action === 'like') {
+                                if (response.liked) {
+                                    $thisButton.addClass('active');
+                                    $thisButton.nextAll('.comment-dislike-button').removeClass('active');
+                                } else {
+                                    $thisButton.removeClass('active');
+                                }
+                            } else { // action === 'dislike'
+                                if (response.disliked) {
+                                    $thisButton.addClass('active');
+                                    $thisButton.prevAll('.comment-like-button').removeClass('active');
+                                } else {
+                                    $thisButton.removeClass('active');
+                                }
+                            }
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error: " + status + error);
+                        alert("An error occurred. Please try again.");
+                    }
+                });
+            });
+
+            // Subscribe button logic
+            $('#subscribe-button').click(function() {
+                var channelId = $(this).data('channel-id');
+                var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+                var $thisButton = $(this);
+
+                $.ajax({
+                    url: '/channel/' + channelId + '/subscribe/', // URL for subscribe view
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': csrfToken
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            $('#subscribers-count').text(response.subscribers_count + ' subscribers');
+                            if (response.is_subscribed) {
+                                $thisButton.text('Subscribed').addClass('subscribed');
+                            } else {
+                                $thisButton.text('Subscribe').removeClass('subscribed');
+                            }
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error: " + status + error);
+                        alert("An error occurred. Please try again.");
+                    }
+                });
+            });
+        });
+    </script>
+ 
     <style>
         /* Add this to your existing style block or a separate CSS file */
         .video-meta .actions button.active {
             background-color: #c6c6c6; /* A darker shade to indicate active state */
+            color: #333;
+        }
+        .video-meta .actions button#subscribe-button {
+            background-color: #cc0000; /* YouTube red */
+            color: white;
+            border-radius: 3px;
+            padding: 8px 15px;
+            font-weight: bold;
+        }
+        .video-meta .actions button#subscribe-button.subscribed {
+            background-color: #f0f0f0; /* Grey when subscribed */
             color: #333;
         }
         /* Comment Section Styles */
@@ -215,6 +441,10 @@
             font-size: 20px;
             margin-bottom: 20px;
             color: #333;
+        }
+
+        .comment-item .comment-actions button.active {
+            color: #065fd4; /* Highlight color for active state */
         }
 
         .comment-form {
