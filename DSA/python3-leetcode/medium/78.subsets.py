@@ -8,18 +8,17 @@
 class Solution:
     def subsets(self, nums: list[int]) -> list[list[int]]:
         res = []
-        sol = []
-        def backtrack (index):
-            if index == len(nums) :
-                res.append(sol.copy())
-                return
-            backtrack(index + 1)
-            sol.append(nums[index]) 
-            backtrack(index+1)
-            sol.pop()
-        backtrack(0)
-        return res        
-            
+        path = []
+        def recurse (index) :
+            res.append(path.copy()) 
+            if index == len(nums) : return 
+            for i in range(index,len(nums)) :
+                path.append(nums[i])
+                recurse(i + 1)
+                path.pop()
+
+        recurse(0) 
+        return res  
 # @lc code=end
 
 print(Solution().subsets([1,2,3]))

@@ -10,18 +10,18 @@ class Solution:
         res = []
         path = []
         candidates.sort()
-        def helper(target,index) :
-            if target == 0 : 
-                res.append(path.copy())
+        def recurse (target,index) :
+            if target == 0 :
+                res.append(path.copy()) 
                 return
             for i in range(index,len(candidates)) :
                 if i > index and candidates[i] == candidates[i-1] : continue
                 if target < candidates[i] : break
-                path.append(candidates[i])
-                helper(target - candidates[i],i + 1)    
+                path.append(candidates[i]) 
+                recurse(target - candidates[i],i + 1)
                 path.pop()
-        helper(target,0)      
-        return res 
+        recurse(target,0) 
+        return res
         
 # @lc code=end
 

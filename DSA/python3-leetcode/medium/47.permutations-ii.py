@@ -7,25 +7,30 @@
 # @lc code=start
 class Solution:
     def permuteUnique(self, nums: list[int]) -> list[list[int]]:
-        res =[]
-        path = []
-        used = [False]*len(nums)
+        res = []
         nums.sort()
-        def backtrack () :
-            if len(path) == len(nums) : 
-                res.append(path.copy())
+        used = [False] * len(nums)
+
+        def backtrack(path):
+            if len(path) == len(nums):
+                res.append(path[:])
                 return
-            for i in range(len(nums)) :
-                if used[i] : 
+
+            for i in range(len(nums)):
+                if used[i]:
                     continue
-                if i > 0 and nums[i] == nums[i-1] and not used[i-1] : continue
-                path.append(nums[i]) 
+                # Skip duplicates
+                if i > 0 and nums[i] == nums[i - 1] and not used[i - 1]:
+                    continue
+
                 used[i] = True
-                backtrack()
+                path.append(nums[i])
+                backtrack(path)
                 path.pop()
                 used[i] = False
-        backtrack()
+
+        backtrack([])
         return res
         
 # @lc code=end
-print(Solution().permuteUnique([2,2,2,3]))
+print(Solution().permuteUnique([1,1,2,2,3,3,4]))

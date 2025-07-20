@@ -8,23 +8,17 @@
 class Solution:
     def permute(self, nums: list[int]) -> list[list[int]]:
         res =[]
-        path = []
-        used = [False]*len(nums)
-        def backtrack () :
-            if len(path) == len(nums) : 
-                res.append(path.copy())
+        def recurse (index) :
+            if index == len(nums) :
+                res.append(nums.copy())
                 return
-            for i in range(len(nums)) :
-                if used[i] : 
-                    continue
-                path.append(nums[i]) 
-                used[i] = True
-                backtrack()
-                path.pop()
-                used[i] = False
-        backtrack()
-        return res        
-        
+
+            for i in range(index,len(nums)) :
+                nums[index],nums[i] = nums[i],nums[index]
+                recurse(index + 1)
+                nums[i],nums[index] = nums[index],nums[i]
+        recurse(0)
+        return res
 # @lc code=end
 
 print(Solution().permute([1,2,3]))

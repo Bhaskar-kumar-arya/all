@@ -9,19 +9,16 @@ class Solution:
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
         res = []
         path = []
-        candidates.sort()
-        def helper(target,index) :
-            if target == 0 : 
-                res.append(path.copy())
+        def recurse (target,index) :
+            if target < 0 : return
+            elif target == 0 :
+                res.append(path.copy()) 
                 return
             for i in range(index,len(candidates)) :
-                if target < candidates[i] : break
-                path.append(candidates[i])
-                helper(target - candidates[i],i)    
+                path.append(candidates[i]) 
+                recurse(target - candidates[i],i)
                 path.pop()
-        helper(target,0)      
-        return res  
-
-        
+        recurse(target,0) 
+        return res
 # @lc code=end
-print(Solution().combinationSum([2,3,5],8))
+print(Solution().combinationSum([2,3,6,7],7))
