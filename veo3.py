@@ -4,7 +4,7 @@ from google.genai import types
 import os
 import base64
 
-client = genai.Client(api_key="AIzaSyBeISt0cP6XU8Mf1uiF8N5OnO-zczJHnjY")
+client = genai.Client(api_key="")
 
 with open("veo3.jpg", "rb") as img_file:
     image_bytes = img_file.read()
