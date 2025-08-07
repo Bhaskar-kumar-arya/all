@@ -3,7 +3,6 @@ const searchBTN = document.getElementById("search-btn")
 const avatarImg = document.getElementById("avatar")
 const username = document.getElementById("username")
 
-const token = "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"
 
 const BASE_URL =  "https://api.github.com/users/"
 
