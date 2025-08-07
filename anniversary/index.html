@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Anniversary ❤️</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="hearts"></div>
+  <div class="container">
+    <div class="card">
+      <!-- <img src="your-photo.jpg" alt="Us" class="photo"/> -->
+      <h1>Happy 2nd Anniversary, My Love! ❤️</h1>
+      <p>
+        These 2 years with you have been nothing short of magic.  
+        Thank you for filling my life with laughter, love, and endless memories.
+        I can’t wait to create many more with you 💕
+      </p>
+      <a href="#" class="btn" id="showMemories">View Our Memories 📸</a>
+<div class="slideshow-container" id="memories" style="display: none;">
+  <h2>Our Beautiful Moments 💕</h2>
+
+  <div class="slideshow">
+        <img src="01.jpg" alt="Memory 1" class="slide" />
+        <img src="02.jpg" alt="Memory 2"  class="slide" />
+        <img src="03.jpg" alt="Memory 3" class="slide" />
+        <img src="04.jpg" alt="Memory 1" class="slide" />
+        <img src="05.jpg" alt="Memory 2" class="slide" />
+        <img src="06.jpg" alt="Memory 3" class="slide" />
+        <img src="07.jpg" alt="Memory 1" class="slide" />
+        <img src="08.jpg" alt="Memory 2" class="slide" />
+    <!-- Add more images here -->
+    
+    <a class="prev">&#10094;</a>
+    <a class="next">&#10095;</a>
+  </div>
+</div>
+
+</div>
+</div>
+
+    </div>
+  </div>
+  <audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mp3">
+</audio>
+<script>
+  const btn = document.getElementById("showMemories");
+  const memories = document.getElementById("memories");
+  const slides = document.querySelectorAll(".slide");
+  const prev = document.querySelector(".prev");
+  const next = document.querySelector(".next");
+  const music = document.getElementById("bgMusic");
+
+  let current = 0;
+
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    memories.style.display = "block";
+    btn.style.display = "none";
+    showSlide(current);
+
+    // Play music after interaction
+    music.play().catch((err) => {
+      console.log("Autoplay blocked. User interaction required.");
+    });
+  });
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove("active");
+      if (i === index) slide.classList.add("active");
+    });
+  }
+
+  prev.addEventListener("click", () => {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  });
+
+  next.addEventListener("click", () => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  setInterval(() => {
+    confetti({
+      particleCount: 5,
+      spread: 50,
+      origin: { y: 0.6 },
+      colors: ['#ff69b4', '#ffb6c1'],
+      shapes: ['circle']
+    });
+  }, 1000);
+</script>
+
+</body>
+</html>

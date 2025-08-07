@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">    
+</head>
+
+<body>
+    <div class="main-container">
+        <header>
+            <div class="grip-lines">
+                <i class="fa-solid fa-grip-lines"></i>
+            </div>
+            <div class="yt-logo">
+                <i class="fa-brands fa-youtube"></i> YouTube <sup>IN</sup>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search" class="search" placeholder="Search">
+                <button class="search-btn" id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <button class="create-btn" id="create-btn"><i class="fa-solid fa-plus"></i> Create</button>
+            <div class="notifications">
+                <button id="notifications-btn"><i class="fa-solid fa-bell"></i> <sup>3</sup></button>
+            </div>
+            <div class="avatar">
+                <!-- <img src="" alt="avatar"> -->
+                 B
+            </div>
+        </header>
+        <div class="body-container">
+            <div class="left-panel">
+                <div class="general-options">
+                    <div class="option" id="Home">
+                        <button id="Home" class="active"><i class="fa-solid fa-house"></i> <span class="text">Home</span> </button>
+                    </div>
+                    <div class="option" id="Shorts">
+                        <button id="Home"><i class="fa-solid fa-film"></i> <span class="text">Shorts</span> </button>
+                    </div>
+                    <div class="option" id="Subscriptions">
+                        <button id="Home"><i class="fa-solid fa-circle-play"></i> <span class="text">Subscriptions</span> </button>
+                    </div>
+                </div>
+                <div class="user-options">
+                    <h3>You <span class="arrow">></span> </h3>
+                    <div class="option" id="Home">
+                        <button id="History" class="active"><i class="fa-solid fa-clock-rotate-left"></i></i> <span class="text">History</span> </button>
+                    </div>
+                    <div class="option" id="Playlists">
+                        <button id="Home"><i class="fa-solid fa-layer-group"></i></i> <span class="text">Playlists</span> </button>
+                    </div>
+                    <div class="option" id="Subscriptions">
+                        <button id="Home"><i class="fa-regular fa-circle-play"></i></i> <span class="text">Your Videos</span> </button>
+                    </div>
+                    <div class="option" id="Home">
+                        <button id="Home"><i class="fa-regular fa-clock"></i> <span class="text">Watch later</span> </button>
+                    </div>
+                    <div class="option" id="Shorts">
+                        <button id="Home"><i class="fa-regular fa-thumbs-up"></i> <span class="text">Liked videos</span> </button>
+                    </div>
+                    <div class="option" id="Subscriptions">
+                        <button id="Home"><i class="fa-solid fa-download"></i></i> <span class="text">Downloads</span> </button>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content-container">
+                <div class="filters">
+                    <button class="filter">
+                        All
+                    </button>
+                    <button class="filter">
+                        PUBG
+                    </button>
+                    <button class="filter">
+                        JEE
+                    </button>
+                </div>
+                <div class="main-content">
+                    <div class="media-row">
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/2F2wGFyJ96k/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCoXbS1DswpP-qSPomLaOo8ir_isQ" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">Learn HTML in 10 Minutes</div>
+                                    <div class="channel-name">
+                                        Web Dev Simplified
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">1.2M</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">1</span> year ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/i1xSpX52vjk/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCBoizUsGkUDiRz8LaBpW9wvbiEjg" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">CSS Grid Tutorial</div>
+                                    <div class="channel-name">
+                                        Traversy Media
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">800K</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">6</span> months ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/xc4k4ddE7bI/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAUUCoZrtJVMEiQx8_4LaAdgPv4bw" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">JavaScript Crash Course</div>
+                                    <div class="channel-name">
+                                        freeCodeCamp.org
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">2.5M</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">2</span> years ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/rzoq6AOgudA/hq720.jpg?sqp=-oaymwEnCOgCEMoBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLApEjhC1lqKZEhwitkr0LrXVwC7sw" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">React JS Full Course</div>
+                                    <div class="channel-name">
+                                        Academind
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">1.8M</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">9</span> months ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/OyeHn79DsPc/hq720.jpg?sqp=-oaymwEnCOgCEMoBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAAHDdqBgfZk0Y9xe7JrNkWQaVtxg" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">Node.js Express Tutorial</div>
+                                    <div class="channel-name">
+                                        Net Ninja
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">950K</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">1</span> year ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/qjVvWQrBRtU/hq720.jpg?sqp=-oaymwEnCOgCEMoBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBVJnqtyJUJ4zLQH5LdpOZVNOG5vg" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">Python for Beginners</div>
+                                    <div class="channel-name">
+                                        Mosh Hamedani
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">5M</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">3</span> years ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/GXZrF2j6wS0/hq720.jpg?sqp=-oaymwEnCOgCEMoBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAldXVTvu-kLv_ZWKYqw3XHxnaZRQ" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">Django Web Framework</div>
+                                    <div class="channel-name">
+                                        Corey Schafer
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">700K</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">1</span> year ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/P6FORpg0KVo/hq720.jpg?sqp=-oaymwEnCOgCEMoBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAmA3-hhNPely8xILnT_amLc2VtOw" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">SQL Crash Course</div>
+                                    <div class="channel-name">
+                                        Programming with Mosh
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">1.1M</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">8</span> months ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://i.ytimg.com/vi/iKZyYdwS3Wg/hq720.jpg?sqp=-oaymwEnCOgCEMoBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAJfFZ4fd2DFtCdZ88dV3WErpKEtg" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">Docker for Developers</div>
+                                    <div class="channel-name">
+                                        Tech with Tim
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">450K</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">5</span> months ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <img src="thumbnail.jpg" alt="thumbnail" class="thumbnail">
+                            <div class="video-info">
+                                <div class="avatar">
+                                    <img src="veo3.jpg" alt="avatar" class="channel-avatar">
+                                </div>
+                                <div class="info">
+                                    <div class="title">Git & GitHub Tutorial</div>
+                                    <div class="channel-name">
+                                        The Coding Train
+                                    </div>
+                                    <div class="views-time">
+                                        <div class="views">
+                                            <span class="view-count">600K</span> views
+                                        </div>
+                                        .
+                                        <div class="time">
+                                            <span class="upload-time">10</span> months ago
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="triple-dot">
+                                    <button class="triple-dot-btn">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

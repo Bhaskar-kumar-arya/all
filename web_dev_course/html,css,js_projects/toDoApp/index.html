@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <h1>My Tasks</h1>
+            <span class="calendar">Monday,May 5</span>
+        </div>
+        <div class="newTask-container">
+            <input type="text" id="newTask-input"> 
+            <button id="addTask-btn">+</button>
+        </div>
+        <div class="main-container">
+            <div class="screen-btns">
+                <button class="screen-btn" id="All-btn">All</button>
+                <button class="screen-btn" id="Active-btn">Active</button>
+                <button class="screen-btn" id="Completed-btn">Completed</button>
+            </div>
+            <div class="screens">
+                <div class="tasks active" id="All-tasks">
+                    <ul>
+
+                    </ul>
+                </div>
+                <div class="tasks" id="Active-tasks">
+                    <ul>
+
+                    </ul>
+                </div>
+            </div>
+        <div class="end">
+            <div class="no-of-items"><span id="items-count">0</span> items left</div>
+            <button id="clearCompleted-btn">Clear Completed</button>
+        </div>
+        </div>
+    </div>
+</body>
+    <script src="script.js"></script>
+
+</html>
