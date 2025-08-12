@@ -1,0 +1,131 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  /* border: 1px solid red; */
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(68, 68, 68);
+}
+
+#root {
+  background-color: rgb(54, 54, 54);
+  color: white;
+  padding: 16px;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  min-height: 500px;
+} 
+
+#root .ToDoList {
+  flex-grow: 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+}
+
+.to-do-form {
+  display: flex;
+  gap: 8px;
+  align-items:center;
+  position: relative;
+  margin-bottom: 16px;
+
+}
+
+.to-do-form::after {
+  content: "";
+  height: 1px;
+  position: absolute;
+  bottom: -6px;
+  background-color: rgba(255, 255, 255,0.5);
+  width: 100%;
+}
+
+
+
+.to-do-form input {
+  flex-grow: 1;
+  height: 1.5rem;
+  padding-left: 8px;
+}
+
+.to-do-form button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+.ToDoList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ToDoList ul li {
+  padding: 8px 8px;
+  transition: all 0.2s ease;
+}
+
+.ToDoList ul li:hover {
+  background-color: rgb(90, 89, 89);
+  transform: translateX(-8px);
+}
+
+
+.ToDoList .categories {
+  display: flex;
+  gap: 16px;
+  font-size: 1.4rem;
+}
+
+.category {
+  cursor: pointer;
+  position: relative;
+}
+
+
+.category:hover {
+  background-color: rgb(14, 14, 14);
+}
+
+
+
+.category.active::after {
+  content: "";
+  height: 1px;
+  position: absolute;
+  bottom: -6px;
+  background-color: rgba(255, 255, 255,0.5);
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.items {
+  margin-top: 8px;
+  text-decoration: none;
+  list-style: none;
+  display: none;
+}
+
+.items.active {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 1.1rem;
+}

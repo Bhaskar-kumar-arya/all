@@ -1,0 +1,18 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    cursor: pointer;    
+    padding: 8px;
+    height: 64px;
+}
+
+.item p {
+    overflow: hidden;
+    color: rgb(46, 39, 39);
+}
+
+.item.active {
+    background-color: rgb(144, 233, 211);
+}

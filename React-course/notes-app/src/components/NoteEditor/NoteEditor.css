@@ -1,0 +1,20 @@
+.editor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.editor h1 {
+    text-align: center;
+}
+
+
+.editor textarea {
+    flex-grow: 1;
+    width: 100%;
+    text-align: center;
+    vertical-align: top;
+    font-size: 2rem;
+    padding: 16px;
+    box-sizing: border-box;
+}

@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    /* border: 1px solid red; */
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container {
+    display: flex;
+    gap: 8px;
+    background-color: rgb(181, 193, 194);
+    padding: 32px;
+    width: 600px;
+    min-height: 600px;
+}
+
+.main-container .editor {
+    flex-grow: 1;
+}
