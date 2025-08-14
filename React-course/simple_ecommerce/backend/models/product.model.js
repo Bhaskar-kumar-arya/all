@@ -1,4 +1,3 @@
-import { time } from "console";
 import mongoose, { mongo } from "mongoose";
 
 const productSchema = mongoose.Schema({
