@@ -12,7 +12,7 @@ export default function NavBar() {
   return (
     <Container maxW={"1200px"} alignItems={"center"} justifyContent={"center"} px={4} bg={useColorModeValue("gray.100","gray.900")}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"} flexDir={{base:"column",sm:"row"}}>
-        <Text><Link to={"/"}>Product Store</Link></Text>
+        <Link to={"/"}>Product Store</Link>
         <HStack>
           <Link to={"/Create"}>
             <Button>
@@ -24,6 +24,6 @@ export default function NavBar() {
           </Button>
         </HStack>
       </Flex>
-    </Container>
+    </Container> 
   )
 }
