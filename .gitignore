@@ -3,3 +3,5 @@
 internal.txt
 01.mp4
 with_image_input0.mp4
+# ignore all .env files
+*.env

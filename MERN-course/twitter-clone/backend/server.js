@@ -24,6 +24,9 @@ app.use(cookieParser())
 
 app.use("/api/auth",authRoutes)
 app.use('/api/users',userRoutes)
+app.use('/api/posts', (req, res) => {
+    res.status(501).send("Posts API not implemented yet")
+})
 
 app.get('/', (req, res) => {
     res.send("Hello from the server")
