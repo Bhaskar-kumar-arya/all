@@ -4,8 +4,8 @@ for _ in range(int(input())) :
     smallest = nums[0]
     possible = True
     for i in range(1,len(nums)) :
-        if nums[i] <= nums[i-1] :
-            smallest = min(nums[i],smallest)
+        if nums[i] <= smallest :
+            smallest = nums[i]
             continue
         if (smallest)*2 <= nums[i] :
             possible = False
@@ -14,3 +14,5 @@ for _ in range(int(input())) :
         print('Yes')
     else :
         print('No')
+
+

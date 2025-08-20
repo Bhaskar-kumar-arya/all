@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import connectDB from './db/db.js'
 import userRoutes from './routes/user.routes.js'
+import postRoutes from './routes/post.routes.js'
+import notificationRoutes from './routes/notification.routes.js'
 import {v2} from 'cloudinary'
 
 dotenv.config()
@@ -24,9 +26,8 @@ app.use(cookieParser())
 
 app.use("/api/auth",authRoutes)
 app.use('/api/users',userRoutes)
-app.use('/api/posts', (req, res) => {
-    res.status(501).send("Posts API not implemented yet")
-})
+app.use('/api/posts', postRoutes)
+app.use('/api/notifications',notificationRoutes)
 
 app.get('/', (req, res) => {
     res.send("Hello from the server")
