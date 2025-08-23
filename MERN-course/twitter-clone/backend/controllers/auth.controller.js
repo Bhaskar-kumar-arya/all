@@ -97,7 +97,7 @@ export const getMe = async (req,res)=> {
         res.status(200).json(user);
     } catch (error) {
         console.log("error in getMe controller", error.message)
-        return res.status(500).json({message:"Internal Server Error"})
+        return res.status(500).json({error:"Internal Server Error"})
     }
 }
          
