@@ -7,10 +7,10 @@
 # @lc code=start
 class Solution:
     def rob(self, nums: list[int]) -> int:
-        if len(nums) == 1 : return nums[0]
-        if len(nums) == 2 : return max(nums[0],nums[1])
-
-        return max(nums[0] + self.rob(nums[2:]),nums[1] + self.rob(nums[3:]) if len(nums) > 3 else nums[1])
-        
+        a,b = 0,0
+        for i in range(len(nums)) :
+            a,b = max(a,b) , a + nums[i]
+        return max(a,b)    
 # @lc code=end
 
+print(Solution().rob([2,7,9,3,1]))
