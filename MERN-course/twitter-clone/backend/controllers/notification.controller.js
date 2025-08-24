@@ -5,7 +5,7 @@ export const getNotifications = async (req, res) => {
         const userId = req.user._id;
         const notifications = await Notification.find({to:userId}).populate({
             'path' : "from",
-            'select' : 'usrname profileImage'
+            'select' : 'username profileImage'
         })
         // mark notifications as read
         await Notification.updateMany({to:userId, read: false}, {read: true});
