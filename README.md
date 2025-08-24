@@ -59,11 +59,11 @@ This section showcases my journey in learning the MERN (MongoDB, Express.js, Rea
   - `beautifulSoup/`
   - `REST_API/`
   - `selenium/`
-  - `Social_media_app/` (likely a Django project)
+  - `Social_media_app/` 
   - `TicTacToe/`
-  - `ToDoList/` (another ToDo list, possibly Python-based)
+  - `ToDoList/` 
   - `veo/`
-  - `yt_clone/` (likely a Django YouTube clone)
+  - `yt_clone/`
 - **C/C++ Projects**:
   - `c/`
   - `c++/`
