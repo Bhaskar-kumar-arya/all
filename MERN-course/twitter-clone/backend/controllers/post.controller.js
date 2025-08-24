@@ -97,7 +97,7 @@ export const likeUnlikePost = async (req, res) => {
     await notification.save();
     return res
       .status(200)
-      .json({ message: `post ${likeIndex > -1 ? "UnLiked" : "Liked"}`, post });
+      .json(post.likes);
   } catch (error) {
     console.error("Error liking/unliking post:", error.message);
     return res.status(500).json({ message: "Internal Server Error" });
